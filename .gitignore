@@ -1,0 +1,6 @@
+.vs/
+x64/
+out/
+*.user
+*.aps
+*.VC.db
