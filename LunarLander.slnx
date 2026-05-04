@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="LunarLander.vcxproj" Id="e85b3bea-597f-4aad-b2ce-2c1d618545b9" />
+</Solution>

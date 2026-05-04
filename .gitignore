@@ -1,6 +1,27 @@
-.vs/
+# --- Compilation & Binaries ---
+bin/
+obj/
 x64/
+x86/
+Release/
+Debug/
 out/
+
+# --- Visual Studio Specific ---
+.vs/
 *.user
 *.aps
 *.VC.db
+*.sln.docstates
+*.suo
+*.ilk
+*.pdb
+*.exp
+
+# --- Operating System Files ---
+Thumbs.db
+.DS_Store
+
+# --- SFML Dependencies ---
+# Only ignore DLLs if you want users to provide their own SFML binaries
+*.dll

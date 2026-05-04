@@ -1,28 +1,32 @@
-# LunarLander
+# Lunar Lander 🚀
 
-A 2D physics-based simulation built with **C++** and **SFML 3**.
+A 2D physics-based lunar landing simulator built with **C++** and **SFML 3**. This project explores vector physics, procedural generation, and Object-Oriented Programming (OOP) principles.
 
-## Overview
-LunarLander is my first game development project, designed to explore C++ programming concepts and basic game physics. 
-The objective is to pilot a spacecraft and land it safely on the lunar surface by managing descent velocity and fuel (thrust).
+## 🎮 Current Features
 
-## Current Features
-* **Physics Engine:** Real-time simulation of gravity, thrust, and vertical velocity.
-* **Landing Logic:** Detects impact speed to determine if the landing was successful (Green) or a crash (Red).
-* **HUD:** Real-time velocity display with 4-decimal precision for precise landings.
-* **Responsive Controls:** Spacebar-activated thrusters to counteract gravitational pull.
+* **Procedural Terrain Generation:** Every game session features a unique lunar surface generated using linear interpolation.
+* **Full 2D Physics:** Real-time simulation of gravity, angular thrust, and rotational inertia.
+* **Resource Management:** Limited fuel system that requires careful descent planning.
+* **Dynamic Collision Detection:** The game calculates the exact terrain height beneath the ship to determine impact points.
+* **Landing Conditions:** Success depends on maintaining a low vertical/horizontal speed and keeping the ship upright (angle near 0°).
+* **Heads-Up Display (HUD):** Real-time tracking of velocity and fuel levels, with visual warnings when fuel is low.
 
-## How to Play
-1.  **Launch:** The game starts with the ship in mid-air.
-2.  **Control:** Press and hold the **Spacebar** to apply upward thrust.
-3.  **Objective:** Touch the bottom of the screen with a velocity lower than **0.1**. 
+## 🕹️ How to Play
 
-## Technical Goals
-* Apply C++ Object-Oriented Programming (OOP) principles.
-* Understand the SFML 3 event loop and rendering pipeline.
-* Implement basic Euler integration for physics movement.
+1.  **Objective:** Land safely on any part of the procedural terrain.
+2.  **Controls:**
+    * `Left / Right Arrows`: Rotate the ship.
+    * `Spacebar`: Fire main thrusters (consumes fuel).
+    * `R Key`: Reset the game and generate a brand-new terrain.
+3.  **Pro Tip:** Keep your total speed below **50.0** and your rotation within **15 degrees** of vertical to avoid a crash.
 
-## Planned Features
-* Horizontal movement and fuel consumption limits.
-* Procedural terrain generation.
-* Menu screens (Start, Game Over, and Restart functionality).
+## 📂 Project Structure
+
+* `/src`: Contains all source code files (`.cpp`) and headers (`.hpp`).
+* `/assets`: Game textures (ship, destroyed state) and HUD fonts.
+
+## 🛠️ Tech Stack
+
+* **Language:** C++
+* **Graphics Library:** SFML 3 (Simple and Fast Multimedia Library)
+* **Mathematics:** Trigonometry for force decomposition and linear interpolation for ground height.
