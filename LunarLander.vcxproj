@@ -132,11 +132,14 @@
   <ItemGroup>
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\LunarLander.cpp" />
+    <ClCompile Include="src\ParticleSystem.cpp" />
     <ClCompile Include="src\ship.cpp" />
     <ClCompile Include="src\terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.hpp" />
+    <ClInclude Include="src\ParticleSystem.hpp" />
+    <ClInclude Include="src\PIDController.hpp" />
     <ClInclude Include="src\ship.hpp" />
     <ClInclude Include="src\terrain.hpp" />
   </ItemGroup>

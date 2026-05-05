@@ -1,32 +1,89 @@
 # Lunar Lander 🚀
 
-A 2D physics-based lunar landing simulator built with **C++** and **SFML 3**. This project explores vector physics, procedural generation, and Object-Oriented Programming (OOP) principles.
+A 2D physics-based lunar landing simulator built with **C++** and **SFML 3**.  
+The project explores vector physics, procedural terrain generation, and autonomous flight via a PID controller.
 
-## 🎮 Current Features
+---
 
-* **Procedural Terrain Generation:** Every game session features a unique lunar surface generated using linear interpolation.
-* **Full 2D Physics:** Real-time simulation of gravity, angular thrust, and rotational inertia.
-* **Resource Management:** Limited fuel system that requires careful descent planning.
-* **Dynamic Collision Detection:** The game calculates the exact terrain height beneath the ship to determine impact points.
-* **Landing Conditions:** Success depends on maintaining a low vertical/horizontal speed and keeping the ship upright (angle near 0°).
-* **Heads-Up Display (HUD):** Real-time tracking of velocity and fuel levels, with visual warnings when fuel is low.
+## 🎮 Features
+
+- **Procedural Terrain** — a unique lunar surface is generated every round using slope-based randomness and linear interpolation
+- **2D Physics** — frame-rate-independent gravity, angular thrust decomposition, and fuel consumption
+- **PID Autopilot** — automatically controls vertical descent and horizontal alignment to achieve a soft landing
+- **Collision Detection** — exact ground height is interpolated at the ship's X position each frame
+- **Score System** — rewards fuel conservation and landing speed; hitting the designated pad gives a 3× multiplier
+- **Particles** — fire exhaust and ground dust effects driven by a lightweight particle pool
+- **Screen Shake** — impact intensity scales with crash speed
+
+---
+
+## 🤖 The PID Autopilot
+
+The autopilot uses a **PID (Proportional-Integral-Derivative)** controller to manage thrust autonomously.
+
+| Term | Role |
+| **P** — Proportional | Reacts to the current velocity error (falling too fast → more thrust) |
+| **I** — Integral | Corrects steady-state drift over time (holds hover without manual tuning) |
+| **D** — Derivative | Damps oscillation by reacting to the *rate of change* of the error |
+
+**Vertical control** — the target descent speed is a linear ramp based on altitude (`targetVY = altitude × 0.06`, clamped to `[0.5, 15]` u/s), so the ship arrives at the ground nearly stationary.
+
+**Horizontal control** — a cascaded system converts X distance to a desired horizontal velocity, then drives the actual velocity toward it, preventing overshoot.
+
+**Anti-windup** — the integral term is clamped to avoid runaway accumulation when thrust is saturated.
+
+---
 
 ## 🕹️ How to Play
 
-1.  **Objective:** Land safely on any part of the procedural terrain.
-2.  **Controls:**
-    * `Left / Right Arrows`: Rotate the ship.
-    * `Spacebar`: Fire main thrusters (consumes fuel).
-    * `R Key`: Reset the game and generate a brand-new terrain.
-3.  **Pro Tip:** Keep your total speed below **50.0** and your rotation within **15 degrees** of vertical to avoid a crash.
+**Objective:** land on the yellow pad with low speed and level orientation.
+
+| Key | Action |
+| `←` / `→` | Rotate the ship |
+| `Space` | Fire main thruster |
+| `A` | Toggle PID autopilot |
+| `R` | Restart and regenerate terrain |
+
+**Landing conditions:** speed below `50 u/s` and rotation within `15°` of vertical.
+
+---
+
+## 🛠️ Building
+
+### Prerequisites
+- [SFML 3](https://www.sfml-dev.org/download/) (Graphics + Audio modules)
+- Visual Studio 2022 (or any C++17-capable compiler)
+
+### Visual Studio
+1. Clone the repo
+2. Open `LunarLander.vcxproj`
+3. Ensure the SFML include and lib paths are set in **Project → Properties → VC++ Directories**
+4. Build and run (`F5`)
+
+---
 
 ## 📂 Project Structure
 
-* `/src`: Contains all source code files (`.cpp`) and headers (`.hpp`).
-* `/assets`: Game textures (ship, destroyed state) and HUD fonts.
+```
+src/
+├── LunarLander.cpp     Entry point — creates Game and calls run()
+├── Game.hpp/cpp        Main loop, autopilot logic, rendering, scoring
+├── Ship.hpp/cpp        Physics, input handling, manual and autopilot thrust
+├── Terrain.hpp/cpp     Procedural ground generation and collision queries
+├── ParticleSystem.hpp/cpp  Fire and dust particle effects
+└── PIDController.hpp   Generic reusable PID controller
 
-## 🛠️ Tech Stack
+assets/
+├── spaceship.png / spaceship_destroyed.png
+├── movement.wav / explosion.wav
+└── verdana.ttf
+```
 
-* **Language:** C++
-* **Graphics Library:** SFML 3 (Simple and Fast Multimedia Library)
-* **Mathematics:** Trigonometry for force decomposition and linear interpolation for ground height.
+---
+
+## 🔧 Tech Stack
+
+- **Language:** C++17
+- **Graphics & Audio:** SFML 3
+- **Physics:** custom — gravity, thrust decomposition via trigonometry, frame-rate-independent integration
+- **Control theory:** discrete PID with anti-windup and derivative filtering
